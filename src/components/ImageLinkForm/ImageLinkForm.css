@@ -1,0 +1,14 @@
+.forn{
+	width: 700px;
+
+	background:
+	radial-gradient(circle farthest-side at 0% 50%,#bce0ee 23.5%,rgba(240,166,17,0) 0)21px 30px,
+	radial-gradient(circle farthest-side at 0% 50%,#71ceef 24%,rgba(240,166,17,0) 0)19px 30px,
+	linear-gradient(#bce0ee 14%,rgba(240,166,17,0) 0, rgba(240,166,17,0) 85%,#bce0ee 0)0 0,
+	linear-gradient(150deg,#bce0ee 24%,#71ceef 0,#71ceef 26%,rgba(240,166,17,0) 0,rgba(240,166,17,0) 74%,#71ceef 0,#71ceef 76%,#bce0ee 0)0 0,
+	linear-gradient(30deg,#bce0ee 24%,#71ceef 0,#71ceef 26%,rgba(240,166,17,0) 0,rgba(240,166,17,0) 74%,#71ceef 0,#71ceef 76%,#bce0ee 0)0 0,
+	linear-gradient(90deg,#71ceef 2%,#bce0ee 0,#bce0ee 98%,#71ceef 0%)0 0 #bce0ee;
+	background-size: 40px 60px;
+
+	
+}
