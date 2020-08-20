@@ -36,8 +36,28 @@ class App extends Component {
       input:'',
       imageURL:'',
       box:{},
-      route:'singin'
+      route:'singin',
+      isSignedIn:false,
+      user:{
+        id:'',
+        name:'',
+        email:'', 
+        entries : 0,
+        joined : ''
+
+      }
     }
+  }
+
+  loadUser = (eUser) =>{
+    this.setState({
+      user:{
+        id:eUser.id,
+        name:eUser.name,
+        email:eUser.email, 
+        entries : eUser.entries,
+        joined : eUser.joined
+    }})
   }
 
   calculateFaceLocation = (data) =>{
@@ -55,6 +75,8 @@ class App extends Component {
     }
 
   }
+
+
 
   onRouteChange = (route) =>{
     this.setState({route:route})
@@ -76,8 +98,23 @@ class App extends Component {
     app.models.predict(
       Clarifai.FACE_DETECT_MODEL, 
       this.state.input)
-      .then( response =>this.displayFaceBox(
-        this.calculateFaceLocation(response)))
+      .then( response =>{
+        if(response){
+          fetch('http://localhost:3000/image',{
+           method:'put',
+            headers:{'Content-type':'application/json'},
+            body: JSON.stringify({
+              id: this.state.user.id
+             
+            })
+          }).then(response =>response.json())
+            .then(count =>{
+              this.setState(Object.assign(this.state.user,
+                {entries:count}))
+            })
+        }
+        this.displayFaceBox(this.calculateFaceLocation(response))
+      })
       .catch(err => console.log(err));
   }
 
@@ -94,16 +131,22 @@ class App extends Component {
             ?
               <div>
                 <Logo />
-                <Rank />
+
+                <Rank name={this.state.user.name} 
+                entries={this.state.user.entries}/>
+
                 <ImageLinkForm onInputChange = {this.onInputChange}
                   onButtonSubmit = {this.onButtonSubmit}/>
+
                 <FaceRecognition box={this.state.box} 
                   imageURL = {this.state.imageURL}/>
               </div>
             :(
               this.state.route==='singin'
-                ? <Singin onRouteChange = {this.onRouteChange} />
-                : <Register onRouteChange = {this.onRouteChange} />
+                ? <Singin onRouteChange = {this.onRouteChange}
+                  loadUser ={this.loadUser}/>
+                : <Register onRouteChange = {this.onRouteChange}
+                  loadUser ={this.loadUser} />
 
             )
 
