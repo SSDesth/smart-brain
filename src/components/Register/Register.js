@@ -30,15 +30,18 @@ class Register extends React.Component {
 			body: JSON.stringify({
 				email: this.state.email,
 				password: this.state.password,
-				name: this.state.Name
+				name: this.state.name
 			})
 		})
 			.then(response => response.json())
 			.then(user =>{
 				console.log(user);
-				if(user){
+				if(user.id){
 					this.props.loadUser(user);
 					this.props.onRouteChange('home');
+				}
+				else{
+					alert(`User not register\nIncorrect form submitted`)
 				}
 			})
 	}
@@ -60,7 +63,7 @@ class Register extends React.Component {
 				        	type="text" 
 				        	name="name"  
 				        	id="name"
-				        	onChange={this.onEmailChange}
+				        	onChange={this.onNameChange}
 				        />
 				      </div>
 
